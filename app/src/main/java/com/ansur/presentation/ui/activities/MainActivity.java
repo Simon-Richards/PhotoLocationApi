@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements PhotosPresenter.V
 
     private PhotosPresenter presenter;
     private PhotosAdapter adapter;
+    private boolean listRetrieved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +57,20 @@ public class MainActivity extends AppCompatActivity implements PhotosPresenter.V
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.resume();
+        if (!listRetrieved) {
+            presenter.resume();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(Constants.LIST_RETRIEVED, listRetrieved);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void displayPhotos(PhotosResponse response) {
+        listRetrieved = true;
         ArrayList<Photo> photoList = (ArrayList<Photo>) response.getData().getPhotos();
         adapter = new PhotosAdapter(this, photoList, this);
         photosRecyclerView.setAdapter(adapter);

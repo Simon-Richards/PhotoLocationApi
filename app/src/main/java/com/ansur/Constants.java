@@ -13,4 +13,7 @@ public class Constants {
     public static final double DEFAULT_LATITUDE = 41.3851;
     public static final double DEFAULT_LONGITUDE = 2.1734;
 
+    // onSaveInstanceState
+    public static final String LIST_RETRIEVED = "list_retrieved";
+
 }
