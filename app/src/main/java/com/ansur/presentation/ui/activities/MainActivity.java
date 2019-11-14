@@ -1,6 +1,7 @@
 package com.ansur.presentation.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements PhotosPresenter.V
     RecyclerView photosRecyclerView;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+
     private PhotosPresenter presenter;
     private PhotosAdapter adapter;
 
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements PhotosPresenter.V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        photosRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        photosRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         presenter = new PhotosPresenterImpl(
                 ThreadExecutor.getInstance(),
