@@ -1,15 +1,15 @@
 package com.ansur.presentation.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -22,13 +22,15 @@ import com.ansur.domain.model.PhotosResponse;
 import com.ansur.presentation.adapters.PhotosAdapter;
 import com.ansur.presentation.presenters.PhotosPresenter;
 import com.ansur.presentation.presenters.impl.PhotosPresenterImpl;
+import com.ansur.presentation.ui.viewmodel.MainActivityViewModel;
+import com.ansur.presentation.ui.viewmodel.MainActivityViewModelFactory;
 import com.ansur.storage.PhotosApiRepository;
 import com.ansur.threading.MainThreadImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PhotosPresenter.View, PhotosAdapter.ListItemClickListener {
-    private static final String TAG = "MainActivity";
 
     @BindView(R.id.photos_recycler_view)
     RecyclerView photosRecyclerView;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements PhotosPresenter.V
 
     private PhotosPresenter presenter;
     private PhotosAdapter adapter;
+    private List<Photo> photoList;
+    private MainActivityViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +55,14 @@ public class MainActivity extends AppCompatActivity implements PhotosPresenter.V
                 this,
                 new PhotosApiRepository()
         );
+        MainActivityViewModelFactory factory = new MainActivityViewModelFactory(presenter);
+        mainViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.resume();
+        mainViewModel.resume();
     }
 
     @Override
