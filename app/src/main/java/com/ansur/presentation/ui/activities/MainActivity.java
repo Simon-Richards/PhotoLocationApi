@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,10 +72,10 @@ public class MainActivity extends AppCompatActivity implements PhotosPresenter.V
             Toast.makeText(MainActivity.this,
                     R.string.no_coordinates_found, Toast.LENGTH_LONG).show();
         } else {
-            //Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-            //intent.putExtra(Constants.LATITUDE_DOUBLE_EXTRA, latitude);
-            //intent.putExtra(Constants.LONGITUDE_DOUBLE_EXTRA, longitude);
-            //startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            intent.putExtra(Constants.LATITUDE_DOUBLE_EXTRA, latitude);
+            intent.putExtra(Constants.LONGITUDE_DOUBLE_EXTRA, longitude);
+            startActivity(intent);
         }
     }
 
