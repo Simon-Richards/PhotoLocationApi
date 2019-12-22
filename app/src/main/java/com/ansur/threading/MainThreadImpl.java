@@ -24,7 +24,7 @@ public class MainThreadImpl implements MainThread {
         if (mainThread == null) {
             mainThread = new MainThreadImpl();
         }
-
+        
         return mainThread;
     }
 }
